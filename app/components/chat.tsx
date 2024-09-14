@@ -100,7 +100,7 @@ import {
   UNFINISHED_INPUT,
   ServiceProvider,
 } from "../constant";
-import { Avatar } from "./emoji";
+import { Avatar, MaaSAvatar, UserAvatar } from "./emoji";
 import { ContextPrompts, MaskAvatar, MaskConfig } from "./mask";
 import { useMaskStore } from "../store/mask";
 import { ChatCommandPrefix, useChatCommand, useCommand } from "../command";
@@ -127,33 +127,33 @@ export function SessionConfigModel(props: { onClose: () => void }) {
       <Modal
         title={Locale.Context.Edit}
         onClose={() => props.onClose()}
-        actions={[
-          <IconButton
-            key="reset"
-            icon={<ResetIcon />}
-            bordered
-            text={Locale.Chat.Config.Reset}
-            onClick={async () => {
-              if (await showConfirm(Locale.Memory.ResetConfirm)) {
-                chatStore.updateCurrentSession(
-                  (session) => (session.memoryPrompt = ""),
-                );
-              }
-            }}
-          />,
-          <IconButton
-            key="copy"
-            icon={<CopyIcon />}
-            bordered
-            text={Locale.Chat.Config.SaveAs}
-            onClick={() => {
-              navigate(Path.Masks);
-              setTimeout(() => {
-                maskStore.create(session.mask);
-              }, 500);
-            }}
-          />,
-        ]}
+        // actions={[
+        //   <IconButton
+        //     key="reset"
+        //     icon={<ResetIcon />}
+        //     bordered
+        //     text={Locale.Chat.Config.Reset}
+        //     onClick={async () => {
+        //       if (await showConfirm(Locale.Memory.ResetConfirm)) {
+        //         chatStore.updateCurrentSession(
+        //           (session) => (session.memoryPrompt = ""),
+        //         );
+        //       }
+        //     }}
+        //   />,
+        //   <IconButton
+        //     key="copy"
+        //     icon={<CopyIcon />}
+        //     bordered
+        //     text={Locale.Chat.Config.SaveAs}
+        //     onClick={() => {
+        //       navigate(Path.Masks);
+        //       setTimeout(() => {
+        //         maskStore.create(session.mask);
+        //       }, 500);
+        //     }}
+        //   />,
+        // ]}
       >
         <MaskConfig
           mask={session.mask}
@@ -563,7 +563,7 @@ export function ChatActions(props: {
           icon={props.uploading ? <LoadingButtonIcon /> : <ImageIcon />}
         />
       )}
-      <ChatAction
+      {/* <ChatAction
         onClick={nextTheme}
         text={Locale.Chat.InputActions.Theme[theme]}
         icon={
@@ -577,7 +577,7 @@ export function ChatActions(props: {
             ) : null}
           </>
         }
-      />
+      /> */}
 
       <ChatAction
         onClick={props.showPromptHints}
@@ -585,13 +585,13 @@ export function ChatActions(props: {
         icon={<PromptIcon />}
       />
 
-      <ChatAction
+      {/* <ChatAction
         onClick={() => {
           navigate(Path.Masks);
         }}
         text={Locale.Chat.InputActions.Masks}
         icon={<MaskIcon />}
-      />
+      /> */}
 
       <ChatAction
         text={Locale.Chat.InputActions.Clear}
@@ -729,7 +729,7 @@ export function ChatActions(props: {
         />
       )}
 
-      {showPlugins(currentProviderName, currentModel) && (
+      {/* {showPlugins(currentProviderName, currentModel) && (
         <ChatAction
           onClick={() => {
             if (pluginStore.getAll().length == 0) {
@@ -741,7 +741,7 @@ export function ChatActions(props: {
           text={Locale.Plugin.Name}
           icon={<PluginIcon />}
         />
-      )}
+      )} */}
       {showPluginSelector && (
         <Selector
           multiple
@@ -920,7 +920,7 @@ function _Chat() {
     if (n === 0) {
       setPromptHints([]);
     } else if (text.match(ChatCommandPrefix)) {
-      setPromptHints(chatCommands.search(text));
+      // setPromptHints(chatCommands.search(text));
     } else if (!config.disablePromptHint && n < SEARCH_TEXT_LIMIT) {
       // check if need to trigger auto completion
       if (text.startsWith("/")) {
@@ -1378,8 +1378,9 @@ function _Chat() {
 
   return (
     <div className={styles.chat} key={session.id}>
-      <div className="window-header" data-tauri-drag-region>
-        {isMobileScreen && (
+      {false && (
+        <div className="window-header" data-tauri-drag-region>
+          {/* {isMobileScreen && (
           <div className="window-actions">
             <div className={"window-action-button"}>
               <IconButton
@@ -1390,64 +1391,71 @@ function _Chat() {
               />
             </div>
           </div>
-        )}
+        )} */}
 
-        <div className={`window-header-title ${styles["chat-body-title"]}`}>
-          <div
-            className={`window-header-main-title ${styles["chat-body-main-title"]}`}
-            onClickCapture={() => setIsEditingMessage(true)}
-          >
-            {!session.topic ? DEFAULT_TOPIC : session.topic}
-          </div>
-          <div className="window-header-sub-title">
-            {Locale.Chat.SubTitle(session.messages.length)}
-          </div>
-        </div>
-        <div className="window-actions">
-          {!isMobileScreen && (
-            <div className="window-action-button">
-              <IconButton
-                icon={<RenameIcon />}
-                bordered
-                title={Locale.Chat.EditMessage.Title}
-                aria={Locale.Chat.EditMessage.Title}
-                onClick={() => setIsEditingMessage(true)}
-              />
+          <div className={`window-header-title ${styles["chat-body-title"]}`}>
+            <div
+              className={`window-header-main-title ${styles["chat-body-main-title"]}`}
+              onClickCapture={() => setIsEditingMessage(true)}
+            >
+              {!session.topic ? DEFAULT_TOPIC : session.topic}
             </div>
-          )}
-          <div className="window-action-button">
-            <IconButton
-              icon={<ExportIcon />}
-              bordered
-              title={Locale.Chat.Actions.Export}
-              onClick={() => {
-                setShowExport(true);
-              }}
-            />
+            <div className="window-header-sub-title">
+              {Locale.Chat.SubTitle(session.messages.length)}
+            </div>
           </div>
-          {showMaxIcon && (
+          <div className="window-actions">
+            {!isMobileScreen && (
+              <div className="window-action-button">
+                <IconButton
+                  icon={<RenameIcon />}
+                  bordered
+                  title={Locale.Chat.EditMessage.Title}
+                  aria={Locale.Chat.EditMessage.Title}
+                  onClick={() => setIsEditingMessage(true)}
+                />
+              </div>
+            )}
             <div className="window-action-button">
               <IconButton
-                icon={config.tightBorder ? <MinIcon /> : <MaxIcon />}
+                icon={<ExportIcon />}
                 bordered
-                title={Locale.Chat.Actions.FullScreen}
-                aria={Locale.Chat.Actions.FullScreen}
+                title={Locale.Chat.Actions.Export}
                 onClick={() => {
-                  config.update(
-                    (config) => (config.tightBorder = !config.tightBorder),
-                  );
+                  setShowExport(true);
                 }}
               />
             </div>
-          )}
-        </div>
+            {showMaxIcon && (
+              <div className="window-action-button">
+                <IconButton
+                  icon={config.tightBorder ? <MinIcon /> : <MaxIcon />}
+                  bordered
+                  title={Locale.Chat.Actions.FullScreen}
+                  aria={Locale.Chat.Actions.FullScreen}
+                  onClick={() => {
+                    config.update(
+                      (config) => (config.tightBorder = !config.tightBorder),
+                    );
+                  }}
+                />
+              </div>
+            )}
+          </div>
 
-        <PromptToast
-          showToast={!hitBottom}
-          showModal={showPromptModal}
-          setShowModal={setShowPromptModal}
-        />
-      </div>
+          <PromptToast
+            showToast={!hitBottom}
+            showModal={showPromptModal}
+            setShowModal={setShowPromptModal}
+          />
+        </div>
+      )}
+
+      <PromptToast
+        showToast={!hitBottom}
+        showModal={showPromptModal}
+        setShowModal={setShowPromptModal}
+      />
 
       <div
         className={styles["chat-body"]}
@@ -1515,7 +1523,7 @@ function _Chat() {
                           }}
                         ></IconButton>
                       </div>
-                      {isUser ? (
+                      {/* {isUser ? (
                         <Avatar avatar={config.avatar} />
                       ) : (
                         <>
@@ -1530,7 +1538,8 @@ function _Chat() {
                             />
                           )}
                         </>
-                      )}
+                      )} */}
+                      {isUser ? <UserAvatar /> : <MaaSAvatar />}
                     </div>
                     {!isUser && (
                       <div className={styles["chat-model-name"]}>
@@ -1561,11 +1570,11 @@ function _Chat() {
                                 onClick={() => onDelete(message.id ?? i)}
                               />
 
-                              <ChatAction
+                              {/* <ChatAction
                                 text={Locale.Chat.Actions.Pin}
                                 icon={<PinIcon />}
                                 onClick={() => onPinMessage(message)}
-                              />
+                              /> */}
                               <ChatAction
                                 text={Locale.Chat.Actions.Copy}
                                 icon={<CopyIcon />}

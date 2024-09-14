@@ -112,7 +112,7 @@ export function MaskConfig(props: {
         }}
       />
 
-      <List>
+      {/* <List>
         <ListItem title={Locale.Mask.Config.Avatar}>
           <Popover
             content={
@@ -225,7 +225,7 @@ export function MaskConfig(props: {
             ></input>
           </ListItem>
         ) : null}
-      </List>
+      </List> */}
 
       <List>
         <ModelConfigList

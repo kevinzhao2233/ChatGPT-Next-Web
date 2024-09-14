@@ -306,6 +306,13 @@ export const useChatStore = createPersistStore(
         );
       },
 
+      deleteAllSessions() {
+        set(() => ({
+          currentSessionIndex: 0,
+          sessions: [createEmptySession()],
+        }));
+      },
+
       currentSession() {
         let index = get().currentSessionIndex;
         const sessions = get().sessions;
@@ -388,7 +395,7 @@ export const useChatStore = createPersistStore(
         // make request
         api.llm.chat({
           messages: sendMessages,
-          config: { ...modelConfig, stream: true },
+          config: { ...modelConfig, stream: true, stop_token_ids: [2234] },
           onUpdate(message) {
             botMessage.streaming = true;
             if (message) {

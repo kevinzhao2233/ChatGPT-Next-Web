@@ -69,6 +69,7 @@ export interface RequestPayload {
   frequency_penalty: number;
   top_p: number;
   max_tokens?: number;
+  stop_token_ids?: number[];
 }
 
 export interface DalleRequestPayload {
@@ -154,6 +155,8 @@ export class ChatGPTApi implements LLMApi {
       ...{
         model: options.config.model,
         providerName: options.config.providerName,
+
+        stop_token_ids: options.config.stop_token_ids,
       },
     };
 
@@ -192,6 +195,7 @@ export class ChatGPTApi implements LLMApi {
         presence_penalty: modelConfig.presence_penalty,
         frequency_penalty: modelConfig.frequency_penalty,
         top_p: modelConfig.top_p,
+        stop_token_ids: modelConfig.stop_token_ids,
         // max_tokens: Math.max(modelConfig.max_tokens, 1024),
         // Please do not ask me why not send max_tokens, no reason, this param is just shit, I dont want to explain anymore.
       };

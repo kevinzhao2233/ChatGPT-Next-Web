@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg viewBox="0 0 55 54" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <defs>
+        <rect id="path-1" x="0" y="0" width="55" height="54" rx="27"></rect>
+        <filter x="-11.8%" y="-12.0%" width="123.6%" height="124.1%" filterUnits="objectBoundingBox" id="filter-3">
+            <feGaussianBlur stdDeviation="5" in="SourceAlpha" result="shadowBlurInner1"></feGaussianBlur>
+            <feOffset dx="0" dy="-3" in="shadowBlurInner1" result="shadowOffsetInner1"></feOffset>
+            <feComposite in="shadowOffsetInner1" in2="SourceAlpha" operator="arithmetic" k2="-1" k3="1" result="shadowInnerInner1"></feComposite>
+            <feColorMatrix values="0 0 0 0 0.102802019   0 0 0 0 0   0 0 0 0 0.362630208  0 0 0 0.5 0" type="matrix" in="shadowInnerInner1"></feColorMatrix>
+        </filter>
+        <filter x="-39.0%" y="-39.7%" width="177.9%" height="179.4%" filterUnits="objectBoundingBox" id="filter-4">
+            <feGaussianBlur stdDeviation="10" in="SourceGraphic"></feGaussianBlur>
+        </filter>
+        <path d="M6,11.290909 C6,15.3247623 8.19188754,19.0521965 11.75,21.0691232 C15.3081124,23.0860498 19.6918876,23.0860498 23.25,21.0691232 C26.8081125,19.0521965 29,15.3247623 29,11.290909 C29,5.05511215 23.8512746,0 17.5,0 C11.1487254,0 6,5.05511215 6,11.290909 L6,11.290909 Z" id="path-5"></path>
+        <filter x="-6.5%" y="-6.6%" width="113.0%" height="113.3%" filterUnits="objectBoundingBox" id="filter-6">
+            <feOffset dx="0" dy="0" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="0.5" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0.0950218781   0 0 0 0 0   0 0 0 0 0.570255888  0 0 0 0.534637238 0" type="matrix" in="shadowBlurOuter1"></feColorMatrix>
+        </filter>
+        <path d="M36,36.3272727 C36,37.2530937 35.85,38.1490494 35.16,38.9852748 C32.64,42.0016592 25.92,44.1818182 18,44.1818182 C10.11,44.1818182 3.36,42.0315244 0.84,38.9852748 C0.15,38.1490494 0,37.2530937 0,36.3272727 C0,35.4014518 0.15,34.505496 0.84,33.6692707 C3.36,30.6528863 10.08,28.4727273 18,28.4727273 C25.89,28.4727273 32.64,30.6230211 35.16,33.6692707 C35.85,34.4756308 36,35.3715866 36,36.3272727 Z" id="path-7"></path>
+        <filter x="-4.2%" y="-9.5%" width="108.3%" height="119.1%" filterUnits="objectBoundingBox" id="filter-8">
+            <feOffset dx="0" dy="0" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="0.5" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0.0950218781   0 0 0 0 0   0 0 0 0 0.570255888  0 0 0 0.534637238 0" type="matrix" in="shadowBlurOuter1"></feColorMatrix>
+        </filter>
+    </defs>
+    <g id="页面-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="工作台-概览" transform="translate(-326.000000, -136.000000)">
+            <g id="编组-6" transform="translate(326.000000, 136.000000)">
+                <mask id="mask-2" fill="white">
+                    <use xlink:href="#path-1"></use>
+                </mask>
+                <g id="蒙版" fill-rule="nonzero">
+                    <use fill="#FFFFFF" xlink:href="#path-1"></use>
+                    <use fill="black" fill-opacity="1" filter="url(#filter-3)" xlink:href="#path-1"></use>
+                </g>
+                <rect id="Mask" fill-opacity="0.813155594" fill="currentColor" filter="url(#filter-4)" mask="url(#mask-2)" x="-11" y="10.8" width="77" height="75.6" rx="27.5"></rect>
+                <g id="编组" opacity="0.899716332" mask="url(#mask-2)">
+                    <g transform="translate(10.000000, 13.745455)" id="路径">
+                        <g>
+                            <use fill="black" fill-opacity="1" filter="url(#filter-6)" xlink:href="#path-5"></use>
+                            <use fill="#FFFFFF" fill-rule="evenodd" xlink:href="#path-5"></use>
+                        </g>
+                        <g>
+                            <use fill="black" fill-opacity="1" filter="url(#filter-8)" xlink:href="#path-7"></use>
+                            <use fill="#FFFFFF" fill-rule="evenodd" xlink:href="#path-7"></use>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

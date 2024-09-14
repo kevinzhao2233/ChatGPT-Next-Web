@@ -8,6 +8,8 @@ import { ModelType } from "../store";
 
 import BotIcon from "../icons/bot.svg";
 import BlackBotIcon from "../icons/black-bot.svg";
+import MaaSLogoIcon from "../icons/maas-logo.svg";
+import DefaultAvatarIcon from "../icons/default-avatar.svg";
 
 export function getEmojiUrl(unified: string, style: EmojiStyle) {
   // Whoever owns this Content Delivery Network (CDN), I am using your CDN to serve emojis
@@ -60,5 +62,27 @@ export function EmojiAvatar(props: { avatar: string; size?: number }) {
       size={props.size ?? 18}
       getEmojiUrl={getEmojiUrl}
     />
+  );
+}
+
+export function MaaSAvatar() {
+  return (
+    <div className="no-dark maas-avatar">
+      <MaaSLogoIcon
+        className="maas-avatar"
+        style={{ width: "24px", height: "24px" }}
+      />
+    </div>
+  );
+}
+
+export function UserAvatar() {
+  return (
+    <div className="no-dark maas-avatar">
+      <DefaultAvatarIcon
+        className="maas-avatar"
+        style={{ width: "24px", height: "24px", color: "#7B5BEC" }}
+      />
+    </div>
   );
 }

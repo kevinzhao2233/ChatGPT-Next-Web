@@ -57,7 +57,7 @@ const DEFAULT_IFLYTEK_URL = isApp
 
 const DEFAULT_ACCESS_STATE = {
   accessCode: "",
-  useCustomConfig: false,
+  useCustomConfig: true,
 
   provider: ServiceProvider.OpenAI,
 
@@ -203,9 +203,12 @@ export const useAccessStore = createPersistStore(
         .then((res) => res.json())
         .then((res) => {
           // Set default model from env request
-          let defaultModel = res.defaultModel ?? "";
-          DEFAULT_CONFIG.modelConfig.model =
-            defaultModel !== "" ? defaultModel : "gpt-3.5-turbo";
+          // let defaultModel = res.defaultModel ?? "";
+          // DEFAULT_CONFIG.modelConfig.model =
+          //   defaultModel !== "" ? defaultModel : "gpt-3.5-turbo";
+
+          // 从 maas 设置模型名称
+          DEFAULT_CONFIG.modelConfig.model = "MaaS";
           return res;
         })
         .then((res: DangerConfig) => {

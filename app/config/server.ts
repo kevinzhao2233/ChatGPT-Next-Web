@@ -73,6 +73,9 @@ declare global {
 
       // custom template for preprocessing user input
       DEFAULT_INPUT_TEMPLATE?: string;
+
+      // 视觉模型名称的关键词
+      VISION_MODEL_KEYWORDS?: string;
     }
   }
 }
@@ -158,6 +161,10 @@ export const getServerSideConfig = () => {
     process.env.WHITE_WEBDEV_ENDPOINTS ?? ""
   ).split(",");
 
+  const visionModelKeywords = (process.env.VISION_MODEL_KEYWORDS ?? "").split(
+    ",",
+  );
+
   return {
     baseUrl: process.env.BASE_URL,
     apiKey: getApiKey(process.env.OPENAI_API_KEY),
@@ -230,5 +237,6 @@ export const getServerSideConfig = () => {
     customModels,
     defaultModel,
     allowedWebDevEndpoints,
+    visionModelKeywords,
   };
 };

@@ -23,7 +23,7 @@ function parseApiKey(bearToken: string) {
     apiKey: isApiKey ? token : "",
   };
 }
-
+// 如果开了鉴权，就先判断有没有传 accessCode，最后给 header 中塞了一个 apiKey
 export function auth(req: NextRequest, modelProvider: ModelProvider) {
   const authToken = req.headers.get("Authorization") ?? "";
 

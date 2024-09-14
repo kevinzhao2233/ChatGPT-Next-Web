@@ -224,11 +224,7 @@ export function SideBar(props: { className?: string }) {
       shouldNarrow={shouldNarrow}
       {...props}
     >
-      <SideBarHeader
-        title="NextChat"
-        subTitle="Build your own AI assistant."
-        logo={<ChatGptIcon />}
-      >
+      {/* <SideBarHeader>
         <div className={styles["sidebar-header-bar"]}>
           <IconButton
             icon={<MaskIcon />}
@@ -272,7 +268,7 @@ export function SideBar(props: { className?: string }) {
             }}
           />
         )}
-      </SideBarHeader>
+      </SideBarHeader> */}
       <SideBarBody
         onClick={(e) => {
           if (e.target === e.currentTarget) {
@@ -304,7 +300,7 @@ export function SideBar(props: { className?: string }) {
                 />
               </Link>
             </div>
-            <div className={styles["sidebar-action"]}>
+            {/* <div className={styles["sidebar-action"]}>
               <a href={REPO_URL} target="_blank" rel="noopener noreferrer">
                 <IconButton
                   aria={Locale.Export.MessageFromChatGPT}
@@ -312,7 +308,7 @@ export function SideBar(props: { className?: string }) {
                   shadow
                 />
               </a>
-            </div>
+            </div> */}
           </>
         }
         secondaryAction={

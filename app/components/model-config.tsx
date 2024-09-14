@@ -13,10 +13,14 @@ export function ModelConfigList(props: {
   const allModels = useAllModels();
   const value = `${props.modelConfig.model}@${props.modelConfig?.providerName}`;
 
+  const getModelName = (v: string) => {
+    const [model, providerName] = v.split("@");
+    return `${model}(${providerName})`;
+  };
   return (
     <>
       <ListItem title={Locale.Settings.Model}>
-        <Select
+        {/* <Select
           aria-label={Locale.Settings.Model}
           value={value}
           onChange={(e) => {
@@ -34,7 +38,8 @@ export function ModelConfigList(props: {
                 {v.displayName}({v.provider?.providerName})
               </option>
             ))}
-        </Select>
+        </Select> */}
+        <span style={{ fontSize: "14px" }}>{getModelName(value)}</span>
       </ListItem>
       <ListItem
         title={Locale.Settings.Temperature.Title}

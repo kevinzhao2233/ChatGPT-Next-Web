@@ -28,7 +28,7 @@ import { useAppConfig } from "../store/config";
 import { AuthPage } from "./auth";
 import { getClientConfig } from "../config/client";
 import { type ClientApi, getClientApi } from "../client/api";
-import { useAccessStore } from "../store";
+import { useAccessStore, useChatStore } from "../store";
 
 export function Loading(props: { noLogo?: boolean }) {
   return (
@@ -220,10 +220,38 @@ export function useLoadData() {
   }, []);
 }
 
+export function useInitMaas() {
+  const config = useAppConfig();
+  const chatStore = useChatStore();
+
+  const model = {
+    modelName: "MaasTN-chatglm3-6b-jRTmheqMVR",
+    providerName: "OpenAI",
+  };
+
+  useEffect(() => {
+    const modelConfig = { ...config.modelConfig };
+    config.update(
+      (config) =>
+        (config.customModels = `-all,+${model.modelName}@${model.providerName}`),
+    );
+
+    config.update(
+      (config) =>
+        (config.modelConfig = { ...modelConfig, model: model.modelName }),
+    );
+
+    chatStore.deleteAllSessions();
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+}
+
 export function Home() {
   useSwitchTheme();
   useLoadData();
   useHtmlLang();
+  useInitMaas();
 
   useEffect(() => {
     console.log("[Config] got config from build time", getClientConfig());
