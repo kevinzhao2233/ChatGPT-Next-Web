@@ -223,26 +223,39 @@ export function useLoadData() {
 export function useInitMaas() {
   const config = useAppConfig();
   const chatStore = useChatStore();
-
-  const model = {
-    modelName: "MaasTN-chatglm3-6b-jRTmheqMVR",
-    providerName: "OpenAI",
-  };
+  const accessStore = useAccessStore();
 
   useEffect(() => {
+    const hash = window.location.hash;
+
+    const searchParams = new URLSearchParams(hash.slice(hash.indexOf("?")));
+
+    const apiKey = searchParams.get("apiKey");
+
+    // const modelName = "MaasTN-chatglm3-6b-jRTmheqMVR"
+    const modelName = searchParams.get("modelName");
+    const providerName = searchParams.get("providerName") || "OpenAI";
+
+    if (!modelName) {
+      console.error('URL 中缺少 "modelName"');
+      return;
+    }
     const modelConfig = { ...config.modelConfig };
     config.update(
-      (config) =>
-        (config.customModels = `-all,+${model.modelName}@${model.providerName}`),
+      (config) => (config.customModels = `-all,+${modelName}@${providerName}`),
     );
 
     config.update(
-      (config) =>
-        (config.modelConfig = { ...modelConfig, model: model.modelName }),
+      (config) => (config.modelConfig = { ...modelConfig, model: modelName }),
     );
 
     chatStore.deleteAllSessions();
 
+    if (!apiKey) {
+      console.error('URL 中缺少 "apiKey"', searchParams);
+      return;
+    }
+    accessStore.update((access) => (access.openaiApiKey = apiKey));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 }
@@ -259,7 +272,7 @@ export function Home() {
   }, []);
 
   if (!useHasHydrated()) {
-    return <Loading />;
+    return <Loading noLogo />;
   }
 
   return (
