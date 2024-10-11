@@ -597,22 +597,23 @@ export function ChatActions(props: {
         text={Locale.Chat.InputActions.Clear}
         icon={<BreakIcon />}
         onClick={() => {
-          chatStore.updateCurrentSession((session) => {
-            if (session.clearContextIndex === session.messages.length) {
-              session.clearContextIndex = undefined;
-            } else {
-              session.clearContextIndex = session.messages.length;
-              session.memoryPrompt = ""; // will clear memory
-            }
-          });
+          // chatStore.updateCurrentSession((session) => {
+          //   if (session.clearContextIndex === session.messages.length) {
+          //     session.clearContextIndex = undefined;
+          //   } else {
+          //     session.clearContextIndex = session.messages.length;
+          //     session.memoryPrompt = ""; // will clear memory
+          //   }
+          // });
+          chatStore.deleteAllSessions();
         }}
       />
 
-      <ChatAction
+      {/* <ChatAction
         onClick={() => setShowModelSelector(true)}
         text={currentModelName}
         icon={<RobotIcon />}
-      />
+      /> */}
 
       {showModelSelector && (
         <Selector

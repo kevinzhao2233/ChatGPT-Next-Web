@@ -395,7 +395,7 @@ export const useChatStore = createPersistStore(
         // make request
         api.llm.chat({
           messages: sendMessages,
-          config: { ...modelConfig, stream: true, stop_token_ids: [2234] },
+          config: { ...modelConfig, stream: true, stop_token_ids: [] },
           onUpdate(message) {
             botMessage.streaming = true;
             if (message) {
@@ -710,6 +710,10 @@ export const useChatStore = createPersistStore(
         await indexedDBStorage.clear();
         localStorage.clear();
         location.reload();
+      },
+      async onlyClearAllData() {
+        await indexedDBStorage.clear();
+        localStorage.clear();
       },
       setLastInput(lastInput: string) {
         set({

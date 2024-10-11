@@ -127,7 +127,7 @@ export function changeLang(lang: Lang) {
 
 export function getISOLang() {
   const isoLangString: Record<string, string> = {
-    cn: "zh-Hans",
+    cn: "zh-CN",
     tw: "zh-Hant",
   };
 

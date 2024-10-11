@@ -162,9 +162,9 @@ function Screen() {
   const shouldTightBorder =
     getClientConfig()?.isApp || (config.tightBorder && !isMobileScreen);
 
-  useEffect(() => {
-    loadAsyncGoogleFont();
-  }, []);
+  // useEffect(() => {
+  //   loadAsyncGoogleFont();
+  // }, []);
 
   if (isArtifact) {
     return (
@@ -214,6 +214,7 @@ export function useLoadData() {
   useEffect(() => {
     (async () => {
       const models = await api.llm.models();
+      // console.log('models', models)
       config.mergeModels(models);
     })();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -236,20 +237,21 @@ export function useInitMaas() {
     const modelName = searchParams.get("modelName");
     const providerName = searchParams.get("providerName") || "OpenAI";
 
+    chatStore.deleteAllSessions();
+
     if (!modelName) {
       console.error('URL 中缺少 "modelName"');
       return;
     }
     const modelConfig = { ...config.modelConfig };
-    config.update(
-      (config) => (config.customModels = `-all,+${modelName}@${providerName}`),
-    );
+    config.update((config) => {
+      config.customModels = `-all,+${modelName}@${providerName}`;
+      config.modelConfig = { ...modelConfig, model: modelName };
+    });
 
-    config.update(
-      (config) => (config.modelConfig = { ...modelConfig, model: modelName }),
-    );
-
-    chatStore.deleteAllSessions();
+    // config.update(
+    //   (config) => (config.modelConfig = { ...modelConfig, model: modelName }),
+    // );
 
     if (!apiKey) {
       console.error('URL 中缺少 "apiKey"', searchParams);
@@ -262,7 +264,7 @@ export function useInitMaas() {
 
 export function Home() {
   useSwitchTheme();
-  useLoadData();
+  // useLoadData();
   useHtmlLang();
   useInitMaas();
 
