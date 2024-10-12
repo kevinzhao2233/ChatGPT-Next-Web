@@ -179,7 +179,7 @@ function Screen() {
     if (isSdNew) return <Sd />;
     return (
       <>
-        <SideBar className={isHome ? styles["sidebar-show"] : ""} />
+        {/* <SideBar className={isHome ? styles["sidebar-show"] : ""} /> */}
         <WindowContent>
           <Routes>
             <Route path={Path.Home} element={<Chat />} />
@@ -244,20 +244,26 @@ export function useInitMaas() {
       return;
     }
     const modelConfig = { ...config.modelConfig };
-    config.update((config) => {
-      config.customModels = `-all,+${modelName}@${providerName}`;
-      config.modelConfig = { ...modelConfig, model: modelName };
-    });
+    config.update(
+      (config) => (config.customModels = `-all,+${modelName}@${providerName}`),
+    );
 
-    // config.update(
-    //   (config) => (config.modelConfig = { ...modelConfig, model: modelName }),
-    // );
+    config.update(
+      (config) => (config.modelConfig = { ...modelConfig, model: modelName }),
+    );
 
     if (!apiKey) {
       console.error('URL 中缺少 "apiKey"', searchParams);
       return;
     }
     accessStore.update((access) => (access.openaiApiKey = apiKey));
+
+    console.log("[来自 MaaS 的模型和 API-KEY] ", modelName, apiKey);
+
+    setTimeout(() => {
+      console.log(accessStore.openaiApiKey);
+    }, 0);
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 }
