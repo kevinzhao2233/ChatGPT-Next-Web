@@ -31,11 +31,13 @@ export async function requestOpenai(req: NextRequest) {
     authValue = req.headers.get("Authorization") ?? "";
     authHeaderName = "Authorization";
   }
-
+  console.log("common", serverConfig.baseUrl);
   let path = `${req.nextUrl.pathname}`.replaceAll("/api/openai/", "");
+  console.log("======================== path", path);
 
   let baseUrl =
     (isAzure ? serverConfig.azureUrl : serverConfig.baseUrl) || OPENAI_BASE_URL;
+  console.log("======================== baseUrl", baseUrl);
 
   if (!baseUrl.startsWith("http")) {
     baseUrl = `https://${baseUrl}`;

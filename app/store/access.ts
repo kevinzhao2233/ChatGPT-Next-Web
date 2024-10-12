@@ -194,6 +194,7 @@ export const useAccessStore = createPersistStore(
       if (fetchState > 0 || getClientConfig()?.buildMode === "export") return;
       fetchState = 1;
       fetch("/chat-web/api/config", {
+        // fetch("/api/config", {
         method: "post",
         body: null,
         headers: {

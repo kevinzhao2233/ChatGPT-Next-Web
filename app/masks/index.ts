@@ -27,6 +27,7 @@ export const BUILTIN_MASKS: BuiltinMask[] = [];
 if (typeof window != "undefined") {
   // run in browser skip in next server
   fetch("/chat-web/masks.json")
+    // fetch("/masks.json")
     .then((res) => res.json())
     .catch((error) => {
       console.error("[Fetch] failed to fetch masks", error);

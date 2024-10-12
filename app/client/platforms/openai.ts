@@ -99,6 +99,7 @@ export class ChatGPTApi implements LLMApi {
       }
 
       baseUrl = isAzure ? accessStore.azureUrl : accessStore.openaiUrl;
+      baseUrl = "/chat-web/api/openai";
     }
 
     if (baseUrl.length === 0) {
@@ -115,10 +116,10 @@ export class ChatGPTApi implements LLMApi {
       !isAzure &&
       !baseUrl.startsWith(ApiPath.OpenAI)
     ) {
-      baseUrl = "https://" + baseUrl;
+      // baseUrl = "https://" + baseUrl;
     }
 
-    console.log("[Proxy Endpoint] ", baseUrl, path);
+    console.log("[Proxy Endpoint] ", { baseUrl, path });
 
     // try rebuild url, when using cloudflare ai gateway in client
     return cloudflareAIGatewayUrl([baseUrl, path].join("/"));
