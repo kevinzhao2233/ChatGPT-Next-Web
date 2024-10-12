@@ -17,6 +17,8 @@ import { ErrorBoundary } from "./error";
 
 import { getISOLang, getLang } from "../locales";
 
+import { indexedDBStorage } from "@/app/utils/indexedDB-storage";
+
 import {
   HashRouter as Router,
   Routes,
@@ -227,52 +229,70 @@ export function useInitMaas() {
   const accessStore = useAccessStore();
 
   useEffect(() => {
-    const hash = window.location.hash;
+    const initConfig = () => {
+      const hash = window.location.hash;
 
-    const searchParams = new URLSearchParams(hash.slice(hash.indexOf("?")));
+      const searchParams = new URLSearchParams(hash.slice(hash.indexOf("?")));
 
-    const apiKey = searchParams.get("apiKey");
+      const apiKey = searchParams.get("apiKey");
 
-    // const modelName = "MaasTN-chatglm3-6b-jRTmheqMVR"
-    const modelName = searchParams.get("modelName");
-    const providerName = searchParams.get("providerName") || "OpenAI";
+      // const modelName = "MaasTN-chatglm3-6b-jRTmheqMVR"
+      const modelName = searchParams.get("modelName");
+      const providerName = searchParams.get("providerName") || "OpenAI";
 
-    chatStore.deleteAllSessions();
+      // chatStore.deleteAllSessions();
 
-    if (!modelName) {
-      console.error('URL 中缺少 "modelName"');
-      return;
-    }
-    const modelConfig = { ...config.modelConfig };
-    config.update(
-      (config) => (config.customModels = `-all,+${modelName}@${providerName}`),
-    );
+      setTimeout(() => {
+        chatStore.deleteAllSessions();
+      }, 200);
 
-    config.update(
-      (config) => (config.modelConfig = { ...modelConfig, model: modelName }),
-    );
+      if (!modelName) {
+        console.error('URL 中缺少 "modelName"');
+        return;
+      }
+      const modelConfig = { ...config.modelConfig };
+      config.update(
+        (config) =>
+          (config.customModels = `-all,+${modelName}@${providerName}`),
+      );
 
-    if (!apiKey) {
-      console.error('URL 中缺少 "apiKey"', searchParams);
-      return;
-    }
-    accessStore.update((access) => (access.openaiApiKey = apiKey));
+      config.update(
+        (config) => (config.modelConfig = { ...modelConfig, model: modelName }),
+      );
 
-    console.log("[来自 MaaS 的模型和 API-KEY] ", modelName, apiKey);
+      if (!apiKey) {
+        console.error('URL 中缺少 "apiKey"', searchParams);
+        return;
+      }
+      accessStore.update((access) => (access.openaiApiKey = apiKey));
 
-    setTimeout(() => {
-      console.log(accessStore.openaiApiKey);
-    }, 0);
+      console.log("[来自 MaaS 的模型和 API-KEY] ", modelName, apiKey);
+
+      setTimeout(() => {
+        console.log(accessStore.openaiApiKey);
+      }, 0);
+    };
+
+    const init = async () => {
+      const res = await indexedDBStorage.getItem("chat-next-web-store");
+      console.log(!!res ? "有缓存，即将清理缓存" : "无缓存");
+      if (res) {
+        await indexedDBStorage.clear();
+      }
+      initConfig();
+    };
+    init();
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 }
 
 export function Home() {
+  const chatStore = useChatStore();
+  useInitMaas();
   useSwitchTheme();
   // useLoadData();
   useHtmlLang();
-  useInitMaas();
 
   useEffect(() => {
     console.log("[Config] got config from build time", getClientConfig());
