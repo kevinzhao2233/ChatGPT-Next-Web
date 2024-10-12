@@ -147,7 +147,7 @@ export const usePromptStore = createPersistStore(
     },
 
     onRehydrateStorage(state) {
-      const PROMPT_URL = "./prompts.json";
+      const PROMPT_URL = "./chat-web/prompts.json";
 
       type PromptList = Array<[string, string]>;
 
