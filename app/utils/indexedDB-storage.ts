@@ -17,10 +17,10 @@ class IndexedDBStorage implements StateStorage {
   public async setItem(name: string, value: string): Promise<void> {
     try {
       const _value = JSON.parse(value);
-      if (!_value?.state?._hasHydrated) {
-        console.warn("skip setItem", name);
-        return;
-      }
+      // if (!_value?.state?._hasHydrated) {
+      //   console.warn("skip setItem", name);
+      //   return;
+      // }
       await set(name, value);
     } catch (error) {
       localStorage.setItem(name, value);
