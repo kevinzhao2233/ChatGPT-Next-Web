@@ -264,13 +264,22 @@ export function isVisionModel(model: string) {
 
     "InternVL",
     "LLaVA",
+
     "Mini-Gemini",
+
     "MiniCPM-Llama",
+    "MiniCPM-V",
+    "MiniCPM-o",
+
     "CogVLM2",
     "CogVLM1.1",
+
     "Yi-VL",
+
     "Qwen-VL",
     "Qwen2-VL",
+    "Qwen2.5-VL",
+    "Qwen3-VL",
   ];
   const isGpt4Turbo =
     model.includes("gpt-4-turbo") && !model.includes("preview");

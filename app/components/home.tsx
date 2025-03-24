@@ -266,7 +266,11 @@ export function useInitMaas() {
       }
       accessStore.update((access) => (access.openaiApiKey = apiKey));
 
-      console.log("[来自 MaaS 的模型和 API-KEY] ", modelName, apiKey);
+      console.log(
+        "[来自 MaaS 的模型和 API-KEY] ",
+        modelName,
+        apiKey.substring(0, 10) + "...",
+      );
 
       setTimeout(() => {
         console.log(accessStore.openaiApiKey);
